@@ -12,6 +12,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../plugins/datatables/dataTables.bootstrap.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -109,17 +111,21 @@ desired effect
 
       <!-- Sidebar Menu -->
 	  
-<!--<?php
-session_start();
-require_once('../mysql_connect.php');
-$query="SELECT into ";
-$result=mysqli_query($dbc,$query);
-?>-->
       <ul class="sidebar-menu">
         <li class="header">SCHOOLS</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"></i> <span>ALL</span></a></li>
-        <li><a href="#"><span>DLSU</span></a></li>
+        <li class="active"><a href="home.php"></i> <span>ALL</span></a></li>
+        <?php
+			require_once('../mysql_connect.php');
+			$schools ="SELECT DISTINCT university FROM data;";
+			$res=mysqli_query($dbc,$schools);
+					
+			while($row=mysqli_fetch_array($res,MYSQL_ASSOC)){
+		
+			echo 
+			"<li><a href=\"school.php\"><span>{$row['university']}</span></a></li>";
+			}
+		?>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -142,100 +148,71 @@ $result=mysqli_query($dbc,$query);
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Last Name</th>
-                  <th>First Name</th>
-                  <th>Birthdate</th>
-                  <th>School</th>
+                  <th><div align="center">Last Name</div></th>
+                  <th><div align="center">First Name</div></th>
+                  <th><div align="center">Birthdate</div></th>
+                  <th><div align="center">School</div></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 4.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 5.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td>5</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 5.5
-                  </td>
-                  <td>Win 95+</td>
-                  <td>5.5</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 6
-                  </td>
-                  <td>Win 98+</td>
-                  <td>6</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet Explorer 7</td>
-                  <td>Win XP SP2+</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>AOL browser (AOL desktop)</td>
-                  <td>Win XP</td>
-                  <td>6</td>
-                </tr>
-                <tr>
-                  <td>Gecko</td>
-                  <td>Firefox 1.0</td>
-                  <td>Win 98+ / OSX.2+</td>
-                  <td>1.7</td>
-                </tr>
+				<?php
+					require_once('../mysql_connect.php');
+					$query="SELECT * FROM data;";
+					$result=mysqli_query($dbc,$query);
+					
+					while($row=mysqli_fetch_array($result,MYSQL_ASSOC)){
+					echo 
+					"<tr>
+					<td><div align=\"center\">{$row['surname']} 
+					</div></td>	
+					<td><div align=\"center\">{$row['name']}
+					</div></td>
+					<td><div align=\"center\">{$row['birthday']}
+					</div></td>
+					<td><div align=\"center\">{$row['university']}
+					</div></td>
+					</tr>";
+					}
+				?>
 				 </tbody>
               </table>
             </div>
             <!-- /.box-body -->
-          </div>
+         </div>
+		
 
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="pull-right hidden-xs">
-      Anything you want
-    </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
-  </footer>
-
   
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
-
 <!-- jQuery 2.2.3 -->
-<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
+<script src="../../bootstrap/js/bootstrap.min.js"></script>
 
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
+<!-- SlimScroll -->
+<script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../../plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<!-- page script -->
+<!-- DataTables -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+<script type="text/javascript">
+    $(document).ready(function() {
+       $('#example1').dataTable();
+    })
+</script>
 </body>
 </html>
