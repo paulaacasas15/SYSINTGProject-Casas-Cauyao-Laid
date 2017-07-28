@@ -5,6 +5,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <head>
+<?php 
+Session_start();?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>SYSINTG | Home </title>
@@ -82,7 +84,10 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs"><b>Paula Casas</b></span>
+              <span class="hidden-xs"><b><?php
+require_once('../mysql_connect.php');
+$_SESSION['ayaw'] = $_SESSION['username']; 
+echo  $_SESSION['username'];?></b></span>
             </a
           </li>
           <!-- Control Sidebar Toggle Button -->
@@ -99,16 +104,6 @@ desired effect
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Paula Casas</p>
-        </div>
-      </div>
-
       <!-- Sidebar Menu -->
 	  
       <ul class="sidebar-menu">
@@ -124,6 +119,7 @@ desired effect
 		
 			echo 
 			"<li><a href=\"school.php\"><span>{$row['university']}</span></a></li>";
+			$_POST = $row['university'];
 			}
 		?>
       </ul>
@@ -141,7 +137,25 @@ desired effect
       <!-- Your Page Content Here -->
 	  <div class="box">
             <div class="box-header">
-              <h3 class="box-title">ALL</h3>
+            <h3 class="box-title">Select Schools</h3>
+			
+			<br>
+			<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+			<?php
+			require_once('../mysql_connect.php');
+			$schools ="SELECT DISTINCT university FROM data;";
+			$res=mysqli_query($dbc,$schools);
+					
+			while($row=mysqli_fetch_array($res,MYSQL_ASSOC)){
+		
+			echo 
+			"<input type=\"checkbox\" name=\"mylove\" value=\"{$row['university']}\"> {$row['university']}<br></a>";
+			}
+			?>
+			<br>
+			<input type="submit" name="submit" value="Submit">  
+			</form>
+  
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -155,6 +169,7 @@ desired effect
                 </tr>
                 </thead>
                 <tbody>
+				
 				<?php
 					require_once('../mysql_connect.php');
 					$query="SELECT * FROM data;";
