@@ -5,6 +5,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <head>
+<?php session_start(); ?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>SYSINTG | Home </title>
@@ -12,8 +13,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../../plugins/datatables/dataTables.bootstrap.css">
+  
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -122,7 +122,7 @@ desired effect
 					
 			while($row=mysqli_fetch_array($res,MYSQL_ASSOC)){
 			echo 
-			"<li><a href=\"#\"><span>{$row['university']}</span></a></li>";
+			"<li><a href=\"school.php\"><span>{$row['university']}</span></a></li>";
 			}
 		?>
       </ul>
@@ -142,8 +142,9 @@ desired effect
             <div class="box-header">
               <h3 class="box-title">
 			  <?php
-			  echo "whatever school is selected";
-			  ?></h3>
+require_once('../mysql_connect.php');
+$_SESSION['school'] = $_SESSION['university']; 
+echo  $_SESSION['university'];?></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
